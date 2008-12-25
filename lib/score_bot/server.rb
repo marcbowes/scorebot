@@ -2,7 +2,7 @@ require 'gserver'
 
 module ScoreBot  
   class Server < GServer
-    include IncomingMessageHandler
+    include ScoreBot::IncomingMessageHandler
     
     def initialize(port=6110, host="0.0.0.0", *args)
       super(port, host, *args)
