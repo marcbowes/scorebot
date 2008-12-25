@@ -1,0 +1,1 @@
+require 'score_bot'
