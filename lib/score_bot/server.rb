@@ -1,17 +1,22 @@
 require 'gserver'
 
-module ScoreBot
-  include IncomingMessageInterpreter
-  
+module ScoreBot  
   class Server < GServer
+    include IncomingMessageHandler
+    
     def initialize(port=6110, host="0.0.0.0", *args)
       super(port, host, *args)
     end
     
-    def serve(io)    
+    def serve(io)
+      game = Game.new
       loop do
         if IO.select([io], nil, nil, 2)
-          puts "recv: #{io.gets.chomp}"
+          begin
+            handle_incoming_line(game, io.gets.chomp)
+          rescue Exception => e
+            puts e
+          end
         end
         break if io.closed?
       end
