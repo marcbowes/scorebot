@@ -1,5 +1,6 @@
 module ScoreBot
   module Game
+  
     class Instance
       include States
       
@@ -22,9 +23,32 @@ module ScoreBot
         players[player][:hero] = hero
       end
       
-      def sync_stored_integer(key1, key2, value)
+      def player_colour(player)
+        return nil unless players.include? player
         
+        case players[player][:slot]
+          # when 0    # The Sentinel
+          when 1  then 'blue'
+          when 2  then 'aqua'
+          when 3  then 'purple'
+          when 4  then 'yellow'
+          when 5  then 'orange'
+          # when 6    # The Scourge
+          when 7  then 'fuchsia'
+          when 8  then 'grey'
+          when 9  then 'royal'
+          when 10 then 'green'
+          when 11 then 'brown'
+          when 12..13 # Spectators
+                       'white'
+          else         'white'
+        end
+      end
+      
+      def sync_stored_integer(key1, key2, value)
+        # ..
       end
     end
+    
   end
 end
