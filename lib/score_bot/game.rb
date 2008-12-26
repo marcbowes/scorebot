@@ -7,5 +7,9 @@ module ScoreBot
     def ability_used_no_target(player_name, flag, id)
       # ...
     end
+    
+    def sync_stored_integer(key1, key2, value)
+      
+    end
   end
 end

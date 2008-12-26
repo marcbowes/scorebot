@@ -45,6 +45,12 @@ module ScoreBot
       game.host = incoming.split.last
     end
     
+    def handle_leave(game, incoming)
+      # player leaves game
+      # LEAVE Equinox
+      game.players[incoming.split.last][:playing] = false
+    end
+    
     def handle_pause(game, incoming)
       # game is paused
       # PAUSE Equinox
@@ -59,7 +65,7 @@ module ScoreBot
       players = {}
       slots_and_names.each do |sn|
         slot, name = sn.split('.')
-        players.merge!({ slot_shift(slot.to_i) => name })
+        players.merge!({ name => { :slot => slot_shift(slot.to_i) } })
       end
       game.players = players
     end
@@ -68,6 +74,13 @@ module ScoreBot
       # signify game started
       # START
       game.start!
+    end
+    
+    def syncs(game, incoming)
+      # SyncStoreInteger
+      # SYNCS Data CK0D0N0 7
+      syncs, key1, key2, value = incoming.split
+      game.sync_stored_integer(key1, key2, value)
     end
     
     def handle_unpause(game, incoming)
