@@ -43,8 +43,8 @@ module ScoreBot
               end
               
               case @message.type
-                when "message" then @irc.send_message @message.to, @message.content
-                when "notice"  then @irc.send_notice  @message.to, @message.content
+                when "message" then @connection.send_message @message.to, @message.content
+                when "notice"  then @connection.send_notice  @message.to, @message.content
               end
               
               sleep(0.5) # anti-flood

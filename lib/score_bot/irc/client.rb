@@ -8,6 +8,8 @@ module ScoreBot
       include Commands
       include Messages
       
+      attr_accessor :home
+      
       def initialize(server="za.shadowfire.org", port=6667, nick="dotacw", realname="dotacw", home="#clanwar")
         @connection = ::IRC.new(nick, server, port, realname) # bad library requires unscoping :/
         @home = home
@@ -31,7 +33,7 @@ module ScoreBot
           end
         end
       end
-      
+            
       def join
         @thread.join
         @msgloop.join

@@ -1,8 +1,11 @@
 require 'gserver'
 
 module ScoreBot  
+
   class Server < GServer
     include IncomingMessageHandler
+    
+    attr_accessor :irc
     
     def initialize(port=6110, host="0.0.0.0", *args)
       super(port, host, *args)
@@ -24,4 +27,5 @@ module ScoreBot
       end
     end
   end
+  
 end

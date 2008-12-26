@@ -15,7 +15,7 @@ module ScoreBot
         # ["%x" % "1093678644"].pack("H*") => "A064"
         ability = ["%x" % id].pack("H*")
         
-        hero = ScoreBot::GameUtil.ability_to_hero_name(ability)
+        hero = ScoreBot::Game::Util.ability_to_hero_name(ability)
         return if hero.nil?
         
         players[player][:hero] = hero

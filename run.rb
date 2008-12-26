@@ -1,11 +1,13 @@
 require 'lib/scorebot'
 
-server = ScoreBot::Server.new
-server.audit = true
-server.start
+scorebot_server = ScoreBot::Server.new
+scorebot_server.audit = true
+scorebot_server.start
 
-broadcast = ScoreBot::IRC::Client.new
-broadcast.connect!
+irc_client = ScoreBot::IRC::Client.new
+irc_client.connect!
 
-broadcast.join
+scorebot_server.irc = irc_client
+
+irc_client.join
 server.join

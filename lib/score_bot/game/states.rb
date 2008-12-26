@@ -1,5 +1,6 @@
 module ScoreBot
   module Game
+  
     module States    
       def self.included(game)
         game.class_eval do
@@ -30,5 +31,6 @@ module ScoreBot
         end
       end
     end
+    
   end
 end

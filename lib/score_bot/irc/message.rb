@@ -10,7 +10,9 @@ module ScoreBot
       
       def attributes=(new_attributes)
         attributes = new_attributes.dup
-        attributes.stringify_keys!
+        attributes.keys.each do |key| # this is ActiveSupport/Hash.stringify_keys!
+          attributes[key.to_s] = attributes.delete(key)
+        end
         attributes.each { |k, v| send(k + "=", v) }
       end
     end

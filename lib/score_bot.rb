@@ -17,6 +17,7 @@ require 'score_bot/game/instance'
 # -- irc
 require 'IRC'
 require 'thread'
+require 'score_bot/irc/decorations'
 require 'score_bot/irc/callbacks'
 require 'score_bot/irc/commands'
 require 'score_bot/irc/message'
