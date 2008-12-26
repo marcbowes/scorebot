@@ -13,7 +13,9 @@ module ScoreBot
       loop do
         if IO.select([io], nil, nil, 2)
           begin
-            handle_incoming_line(game, io.gets.chomp)
+            buf = io.gets
+            io.close and return if buf.nil?
+            handle_incoming_line(game, buf.chomp)
           rescue Exception => e
             puts e
           end
