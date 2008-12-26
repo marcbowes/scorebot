@@ -25,7 +25,7 @@ module ScoreBot
         when 'game over'      # nothing
           irc.send_channel_message irc.home, "#{game.name} is over"
         when 'pause'          # :player
-          irc.send_channel_message irc.home, "#{game.name} paused by #{pc game, h[:player]}"
+          irc.send_channel_message irc.home, "#Game paused by #{pc game, h[:player]}"
         when 'player joined'  # :player
           irc.send_channel_message irc.home, "#{pc game, h[:player]} has joined the game"
         when 'player left'    # :player
@@ -33,7 +33,15 @@ module ScoreBot
         when 'game started'   # nothing
           irc.send_channel_message irc.home, "#{game.name} has started"
         when 'unpause'        # :player
-          irc.send_channel_message irc.home, "#{game.name} paused by #{pc game, h[:player]}"
+          irc.send_channel_message irc.home, "#Game paused by #{pc game, h[:player]}"
+        when 'hero death'     # :killer, :action, :victim
+          irc.send_channel_message irc.home, "#{pc game, h[:killer]} #{h[:action]} #{pc game, h[:victim]}'s head!"
+        when 'tower death'    # :killer, :action, :owner, :lane, :position
+          irc.send_channel_message irc.home,
+            "#{pc game, h[:killer]} #{h[:action]} #{h[:owner]}'s #{h[:position]} #{h[:lane]} tower"
+        when 'rax death'      # :killer, :action, :owner, :lane, :type
+          irc.send_channel_message irc.home,
+            "#{pc game, h[:killer]} #{h[:action]} #{h[:owner]}'s #{h[:lane]} #{h[:type]} rax"
       end
     end
     
@@ -134,7 +142,22 @@ module ScoreBot
       # SyncStoreInteger
       # SYNCS Data CK0D0N0 7
       ignore, key1, key2, value = incoming.split
-      game.sync_stored_integer(key1, key2, value)
+      key2.downcase!
+      h = game.sync_stored_integer(key1, key2, value)
+      key2.downcase!
+      if    key2 =~ /hero/
+        broadcast(game, { :event => 'hero death'  }.merge(h))
+      elsif key2 =~ /tower/
+        broadcast(game, { :event => 'tower death' }.merge(h))
+      elsif key2 =~ /rax/
+        broadcast(game, { :event => 'rax death'   }.merge(h))
+      elsif key2 =~ /tree/
+        nil
+      elsif key2 =~ /throne/
+        nil
+      else
+        nil
+      end
     end
     
     def handle_unpause(game, incoming)

@@ -30,7 +30,7 @@ module ScoreBot
       }
 
       def colour_code_for(foreground, background=nil)
-        bgcode = background.nil? ? "99" : COLOUR_MAP[foreground.to_sym]
+        bgcode = background.nil? ? "99" : COLOUR_MAP[background.to_sym]
         [COLOUR_MAP[foreground.to_sym], ',', bgcode].join
       end
     end
