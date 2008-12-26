@@ -57,6 +57,16 @@ module ScoreBot
       game.pause!
     end
     
+    def handle_pjoin(game, incoming)
+      # players joins game in lobby
+      # PJOIN Equinox
+    end
+    
+    def handle_pleft(game, incoming)
+      # player leaves game in lobby
+      # PLEFT Equinox
+    end
+    
     def handle_plist(game, incoming)
       # incoming list of players
       # PLIST 1.Equinox
@@ -76,7 +86,7 @@ module ScoreBot
       game.start!
     end
     
-    def syncs(game, incoming)
+    def handle_syncs(game, incoming)
       # SyncStoreInteger
       # SYNCS Data CK0D0N0 7
       syncs, key1, key2, value = incoming.split

@@ -13,7 +13,12 @@ module ScoreBot
       # "Equinox", "66", "1093684036"
       # ["%x" % "1093678644"].pack("H*") => "A064"
       ability = ["%x" % id].pack("H*")
-      players[player][:hero] = ScoreBot::GameUtil.ability_to_hero(ability)
+      
+      hero = ScoreBot::GameUtil.ability_to_hero_name(ability)
+      return if hero.nil?
+      
+      players[player][:hero] = hero
+      puts "set #{player} to #{players[player][:hero]}"
     end
     
     def sync_stored_integer(key1, key2, value)
