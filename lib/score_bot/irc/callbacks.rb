@@ -17,9 +17,7 @@ module ScoreBot
             end
             split = event.message.split
             unless split.nil? or split.empty?
-              if split.first =~ /^\./
-                command_before_filter(event.from, event.message) if self.respond_to? 'commands_enabled?'
-              end
+              command_before_filter(event.from, event.message) if self.respond_to? 'command_before_filter'
             end
           end # privmsg callback
         end

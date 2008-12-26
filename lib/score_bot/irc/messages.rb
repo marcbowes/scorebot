@@ -16,7 +16,7 @@ module ScoreBot
           end
 
           def send_channel_notice(channel, message)
-            enqueue(Message.new(:type => "notice", :to => channel, :content => message))
+            enqueue(Message.new(:type => "notice",  :to => channel, :content => message))
           end
 
           def send_private_message(to, message)
@@ -24,7 +24,7 @@ module ScoreBot
           end
 
           def send_private_notice(to, message)
-            enqueue(Message.new(:type => "notice", :to => to, :content => message))
+            enqueue(Message.new(:type => "notice",  :to => to, :content => message))
           end
           
           def message_send_loop

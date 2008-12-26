@@ -7,10 +7,6 @@ module ScoreBot
       send("handle_#{split.first.downcase}", game, incoming)
     end
     
-    #def method_missing(m, *args)
-    #  puts "Undefined method #{m}"
-    #end
-    
     protected
     
     def handle_ability(game, incoming)
