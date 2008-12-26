@@ -5,11 +5,14 @@ require 'rubygems'
 gem     'rubyist-aasm'
 require 'aasm'
 
+require 'open-uri'
+
 # add to ruby search path.. makes things easier
 $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 # score_bot libs
+require 'score_bot/game_util'
 require 'score_bot/game_aasm'
 require 'score_bot/game'
 require 'score_bot/incoming_message_handler'
