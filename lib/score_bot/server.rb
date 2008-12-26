@@ -23,7 +23,7 @@ module ScoreBot
             puts e
           end
         end
-        break if io.closed?
+        break if io.closed? || game.complete?
       end
     end
   end

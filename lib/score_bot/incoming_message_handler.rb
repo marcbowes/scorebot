@@ -13,27 +13,27 @@ module ScoreBot
       return unless h.include?(:event)
       case h[:event]
         when 'hero selected'  # :player, :hero
-          irc.send_channel_message irc.home, "#{h[:player]} has selected #{h[:hero]}"
+          irc.send_channel_message irc.home, "#{pc game, h[:player]} has selected #{h[:hero]}"
         when 'all chat'       # :player, :chat
-          irc.send_channel_message irc.home, "#{h[:player]} (all): #{h[:chat]}"
+          irc.send_channel_message irc.home, "#{pc game, h[:player]} (all): #{h[:chat]}"
         when 'team chat'      # ..
-          irc.send_channel_message irc.home, "#{h[:player]} (team): #{h[:chat]}"
+          irc.send_channel_message irc.home, "#{pc game, h[:player]} (team): #{h[:chat]}"
         when 'lobby chat'     # ..
-          irc.send_channel_message irc.home, "#{h[:player]}: #{h[:chat]}"
+          irc.send_channel_message irc.home, "#{pc game, h[:player]}: #{h[:chat]}"
         when 'game created'   # :name, :host
           irc.send_channel_message irc.home, "#{game.name} hosted by #{game.host}"
         when 'game over'      # nothing
           irc.send_channel_message irc.home, "#{game.name} is over"
         when 'pause'          # :player
-          irc.send_channel_message irc.home, "#{game.name} paused by #{h[:player]}"
+          irc.send_channel_message irc.home, "#{game.name} paused by #{pc game, h[:player]}"
         when 'player joined'  # :player
-          irc.send_channel_message irc.home, "#{h[:player]} has joined the game"
+          irc.send_channel_message irc.home, "#{pc game, h[:player]} has joined the game"
         when 'player left'    # :player
-          irc.send_channel_message irc.home, "#{h[:player]} has left the game"
+          irc.send_channel_message irc.home, "#{pc game, h[:player]} has left the game"
         when 'game started'   # nothing
           irc.send_channel_message irc.home, "#{game.name} has started"
         when 'unpause'        # :player
-          irc.send_channel_message irc.home, "#{game.name} paused by #{h[:player]}"
+          irc.send_channel_message irc.home, "#{game.name} paused by #{pc game, h[:player]}"
       end
     end
     
@@ -51,7 +51,7 @@ module ScoreBot
     def handle_chat(game, incoming)
       # player chat
       # CHAT 1 Equinox -wtf
-      ignore, type, chat = incoming.split(' ', 3)
+      ignore, type, player, chat = incoming.split(' ', 4)
       case type.to_i
         when 1 then broadcast(game, :event => 'all chat',   :player => player, :chat => chat)
         when 2 then broadcast(game, :event => 'team chat',  :player => player, :chat => chat)
@@ -143,6 +143,10 @@ module ScoreBot
       game.resume!
       player = incoming.split.last
       broadcast(game, :event => 'unpause', :player => player)
+    end
+    
+    def pc(game, player)
+      bold colour(player, game.player_colour(player))
     end
     
     def slot_shift(slot)
