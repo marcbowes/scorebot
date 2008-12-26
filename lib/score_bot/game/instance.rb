@@ -9,6 +9,7 @@ module ScoreBot
         # this method is used to set the player's hero
         # so if they already have one, nobody cares
         # hero swapping is set by interpreting the -swap command
+        return unless players.include? player
         return unless players[player][:hero].nil?
         
         # "Equinox", "66", "1093684036"
