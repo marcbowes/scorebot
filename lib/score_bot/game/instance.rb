@@ -46,7 +46,62 @@ module ScoreBot
       end
       
       def sync_stored_integer(key1, key2, value)
-        # ..
+        # key1 is always 'Data'?
+        key2.downcase!
+        if key2    =~ /hero/
+          { :killer   => player.find_by_slot(value),
+            :victim   => key2.sub('hero', '') }
+        elsif key2 =~ /tower/
+          keys = key2.sub('tower', '').split(//)
+          { :killer   => player.find_by_slot(value),
+            :owner    => keys[0].to_i,
+            :lane     => id_to_lane(keys[2].to_i),
+            :position => id_to_position(keys[1].to_i) }
+        elsif key2 =~ /rax/
+          keys = key2.sub('rax', '').split(//)
+          { :killer   => player.find_by_slot(value),
+            :owner    => keys[0].to_i,
+            :lane     => id_to_lane(keys[1].to_i),
+            :type     => id_to_type(keys[2].to_i) }
+        elsif key2 =~ /tree/
+          nil
+        elsif key2 =~ /throne/
+          nil
+        else
+          nil
+        end
+      end
+      
+      protected
+      
+      LANE_MAP = {
+        0 => 'top',
+        1 => 'middle',
+        2 => 'bottom'
+      }
+      
+      def id_to_lane(id)
+        LANE_MAP[id]
+      end
+      
+      POSITION_MAP = {
+        1 => 'first',
+        2 => 'second',
+        3 => 'base',
+        4 => 'ancient'
+      }
+      
+      def id_to_position(id)
+        POSITION_MAP[id]
+      end
+      
+      TYPE_MAP = {
+        0 => { 0 => 'Ancient of War', 1 => 'Ancient of Lore' },
+        1 => { 0 => 'Crypt',          1 => 'Temple of the Damned'}
+      }
+      
+      def id_to_type(id, owner)
+        TYPE_MAP[owner][id]
       end
     end
     
