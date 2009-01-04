@@ -10,8 +10,8 @@ module ScoreBot
         # this method is used to set the player's hero
         # so if they already have one, nobody cares
         # hero swapping is set by interpreting the -swap command
-        return unless players.include? player
-        return unless players[player][:hero].nil?
+        return unless @players.include? player
+        return unless @players[player][:hero].nil?
         
         # "Equinox", "66", "1093684036"
         # ["%x" % "1093678644"].pack("H*") => "A064"
@@ -69,7 +69,7 @@ module ScoreBot
             :victim   => find_player_by_slot(victim_slot) }
         elsif key2 =~ /tower/
           keys = key2.sub('tower', '').split(//)
-          killer_slot, owner_slot = value.to_i, keys[0].to_i
+          killer_slot, owner_slot = value.to_i, (keys[0].to_i == 0 ? 0 : 6)
           { :killer   => find_player_by_slot(killer_slot),
             :action   => is_same_team(killer_slot, owner_slot) ? 'denied' : 'destroyed',
             :owner    => find_player_by_slot(owner_slot),
@@ -77,7 +77,7 @@ module ScoreBot
             :position => id_to_position(keys[1].to_i) }
         elsif key2 =~ /rax/
           keys = key2.sub('rax', '').split(//)
-          killer_slot, owner_slot = value.to_i, keys[0].to_i
+          killer_slot, owner_slot = value.to_i, (keys[0].to_i == 0 ? 0 : 6)
           { :killer   => find_player_by_slot(killer_slot),
             :action   => is_same_team(killer_slot, owner_slot) ? 'denied' : 'destroyed',
             :owner    => find_player_by_slot(owner_slot),
