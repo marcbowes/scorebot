@@ -5,6 +5,7 @@ module ScoreBot
       include States
       
       attr_accessor :name, :host
+      attr_reader   :players
       
       def ability_used_no_target(player, flag, id)
         # this method is used to set the player's hero
