@@ -53,7 +53,7 @@ module ScoreBot
       ignore, player, flag_and_id = incoming.split
       flag, id = flag_and_id.split(':')
       abunt = game.ability_used_no_target(player, flag, id)
-      broadcast(game, :event => 'hero selected', :player => player, :hero => abunt)
+      broadcast(game, :event => 'hero selected', :player => player, :hero => abunt) unless abunt.nil?
     end
     
     def handle_chat(game, incoming)
