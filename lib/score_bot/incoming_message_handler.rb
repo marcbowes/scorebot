@@ -27,9 +27,9 @@ module ScoreBot
         when 'pause'          # :player
           irc.send_channel_message irc.home, "#Game paused by #{pc game, h[:player]}"
         when 'player joined'  # :player
-          irc.send_channel_message irc.home, "#{pc game, h[:player]} has joined the game"
+          irc.send_channel_message irc.home, "#{h[:player]} has joined the game"
         when 'player left'    # :player
-          irc.send_channel_message irc.home, "#{pc game, h[:player]} has left the game"
+          irc.send_channel_message irc.home, "#{h[:player]} has left the game"
         when 'game started'   # nothing
           irc.send_channel_message irc.home, "#{game.name} has started"
         when 'unpause'        # :player
