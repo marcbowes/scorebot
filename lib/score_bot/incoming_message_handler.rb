@@ -19,7 +19,7 @@ module ScoreBot
         when 'team chat'      # ..
           irc.send_channel_message irc.home, "#{pc game, h[:player]} (team): #{h[:chat]}"
         when 'lobby chat'     # ..
-          irc.send_channel_message irc.home, "#{pc game, h[:player]}: #{h[:chat]}"
+          irc.send_channel_message irc.home, "#{h[:player]}: #{h[:chat]}"
         when 'game created'   # :name, :host
           irc.send_channel_message irc.home, "#{game.name} hosted by #{game.host}"
         when 'game over'      # nothing
